@@ -44,7 +44,7 @@ export const RESUME: Resume = {
     location: 'Skopje, North Macedonia',
     email: 'jakimovskil211@gmail.com',
     avatar: 'me.webp',
-    resumeUrl: '',
+    resumeUrl: 'Leonid-Jakimovski-CV.pdf',
     availableForWork: true,
   },
 

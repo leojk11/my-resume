@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Leonid Jakimovski — CV</title>
+<style>
+  @page { size: A4; margin: 16mm 18mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.45;
+    color: #1f2328;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  header { border-bottom: 2px solid #0b7285; padding-bottom: 10px; margin-bottom: 14px; }
+  h1 { margin: 0; font-size: 24pt; letter-spacing: 0.5px; color: #111; }
+  .title { margin: 2px 0 8px; font-size: 12pt; color: #0b7285; font-weight: 600; }
+  .contact { font-size: 9.5pt; color: #444; }
+  .contact span + span::before { content: '  |  '; color: #aaa; }
+
+  h2 {
+    margin: 16px 0 8px;
+    font-size: 11pt;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #0b7285;
+    border-bottom: 1px solid #d0d7de;
+    padding-bottom: 3px;
+  }
+  p { margin: 0 0 6px; }
+
+  .job { margin-bottom: 12px; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .role { font-weight: 700; font-size: 11pt; }
+  .period { font-size: 9.5pt; color: #555; white-space: nowrap; }
+  .company { color: #444; margin-bottom: 4px; }
+  ul { margin: 4px 0 0; padding-left: 18px; }
+  li { margin-bottom: 2px; }
+  .tech { margin-top: 4px; font-size: 9.5pt; color: #555; }
+
+  .skills { display: grid; grid-template-columns: 120px 1fr; row-gap: 3px; }
+  .skills dt { font-weight: 700; }
+  .skills dd { margin: 0; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Leonid Jakimovski</h1>
+    <div class="title">Senior Software Developer — Angular</div>
+    <div class="contact">
+      <span>Skopje, North Macedonia</span>
+      <span><a href="mailto:jakimovskil211@gmail.com">jakimovskil211@gmail.com</a></span>
+      <span><a href="https://www.linkedin.com/in/leonidjakimovski/">linkedin.com/in/leonidjakimovski</a></span>
+      <span><a href="https://github.com/leojk11">github.com/leojk11</a></span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Profile</h2>
+    <p>
+      Software developer with 7+ years of experience building for the web, specialising in Angular.
+      Currently a Senior Software Developer at Atis Software Factory, where I build complex, large-scale
+      Angular applications and turn demanding business requirements into fast, maintainable and
+      user-friendly products. My background in designing and building websites from scratch gives me a
+      strong eye for UI, layout and the user experience.
+    </p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+
+    <div class="job">
+      <div class="job-head">
+        <span class="role">Senior Software Developer</span>
+        <span class="period">2021 – Present</span>
+      </div>
+      <div class="company">Atis Software Factory · Remote</div>
+      <ul>
+        <li>Architect and develop feature-rich Angular applications with clean, modular and scalable code.</li>
+        <li>Break down complex problems and design practical solutions, from data flow and state management to performance.</li>
+        <li>Connect Angular applications to existing REST APIs: consuming endpoints, mapping data and handling loading and error states.</li>
+        <li>Review code, share knowledge and help keep quality and best practices high across the team.</li>
+        <li>Work closely with clients and teammates in a fully remote setup, from requirements to delivery.</li>
+      </ul>
+      <div class="tech"><strong>Tech:</strong> Angular, TypeScript, RxJS, API integration, SCSS</div>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <span class="role">Junior Developer</span>
+        <span class="period">2019 – 2021</span>
+      </div>
+      <div class="company">CodeDesk</div>
+      <ul>
+        <li>Built websites end to end: from layout and visual design to responsive, cross-browser implementation.</li>
+        <li>Learned the fundamentals of UI/UX: typography, colour, spacing and designing with the user in mind.</li>
+        <li>Turned design mockups into clean, pixel-perfect HTML, CSS and JavaScript.</li>
+        <li>Built a strong foundation in web development that later grew into building full applications.</li>
+      </ul>
+      <div class="tech"><strong>Tech:</strong> HTML, CSS, JavaScript, Responsive design, UI/UX</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <dl class="skills">
+      <dt>Frontend</dt><dd>Angular, TypeScript, RxJS / Signals, HTML, SCSS</dd>
+      <dt>Backend</dt><dd>Node.js, REST &amp; GraphQL, SQL</dd>
+      <dt>Tools &amp; Cloud</dt><dd>Git, Azure / AWS</dd>
+    </dl>
+  </section>
+</body>
+</html>
