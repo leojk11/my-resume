@@ -1,5 +1,5 @@
 import { Component, ElementRef, computed, effect, inject, signal, viewChild } from '@angular/core';
-import { RESUME } from '../data/resume.data';
+import { I18n, LANGS } from '../i18n/i18n.service';
 import { UiStateService } from '../shared/ui-state.service';
 import { SECTIONS } from './nav';
 
@@ -16,12 +16,12 @@ interface Command {
   template: `
     @if (ui.paletteOpen()) {
       <div class="backdrop" (click)="close()"></div>
-      <div class="palette glass" role="dialog" aria-label="Command palette">
+      <div class="palette glass" role="dialog" [attr.aria-label]="i18n.t('nav.palette')">
         <div class="search">
           <span class="prompt">❯</span>
           <input
             #input
-            placeholder="Type a command or search…"
+            [placeholder]="i18n.t('palette.placeholder')"
             [value]="query()"
             (input)="query.set(input.value); selected.set(0)"
             (keydown)="onKey($event)"
@@ -38,10 +38,10 @@ interface Command {
               }
             </li>
           } @empty {
-            <li class="empty">No matching commands</li>
+            <li class="empty">{{ i18n.t('palette.empty') }}</li>
           }
         </ul>
-        <footer><kbd>↑</kbd><kbd>↓</kbd> navigate <kbd>↵</kbd> run</footer>
+        <footer><kbd>↑</kbd><kbd>↓</kbd> {{ i18n.t('palette.navigate') }} <kbd>↵</kbd> {{ i18n.t('palette.run') }}</footer>
       </div>
     }
   `,
@@ -157,33 +157,43 @@ interface Command {
 })
 export class CommandPalette {
   protected readonly ui = inject(UiStateService);
+  protected readonly i18n = inject(I18n);
   protected readonly query = signal('');
   protected readonly selected = signal(0);
   private readonly input = viewChild<ElementRef<HTMLInputElement>>('input');
 
-  private readonly commands: Command[] = [
-    ...SECTIONS.map((s) => ({ group: 'Go to', label: s.label, run: () => this.ui.scrollTo(s.id) })),
-    { group: 'Go to', label: 'Top', run: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
-    {
-      group: 'Action',
-      label: 'Copy email address',
-      hint: RESUME.profile.email,
-      run: () => this.ui.copy(RESUME.profile.email, 'Email copied'),
-    },
-    ...(RESUME.profile.resumeUrl
-      ? [{ group: 'Action', label: 'Download résumé (PDF)', run: () => window.open(RESUME.profile.resumeUrl, '_blank') }]
-      : []),
-    ...RESUME.socials.map((s) => ({
-      group: 'Link',
-      label: `Open ${s.label}`,
-      run: () => window.open(s.url, '_blank', 'noopener'),
-    })),
-  ];
+  private readonly commands = computed<Command[]>(() => {
+    const t = this.i18n.t.bind(this.i18n);
+    const { profile, socials } = this.i18n.resume();
+    return [
+      ...SECTIONS.map((s) => ({ group: t('palette.goto'), label: t(s.labelKey), run: () => this.ui.scrollTo(s.id) })),
+      { group: t('palette.goto'), label: t('palette.top'), run: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
+      {
+        group: t('palette.action'),
+        label: t('palette.copyEmail'),
+        hint: profile.email,
+        run: () => this.ui.copy(profile.email, t('contact.copied')),
+      },
+      ...(profile.resumeUrl
+        ? [{ group: t('palette.action'), label: t('palette.downloadResume'), run: () => window.open(profile.resumeUrl, '_blank') }]
+        : []),
+      ...LANGS.filter((l) => l.code !== this.i18n.lang()).map((l) => ({
+        group: t('palette.language'),
+        label: t('palette.switchTo', { name: l.name }),
+        run: () => this.i18n.set(l.code),
+      })),
+      ...socials.map((s) => ({
+        group: t('palette.link'),
+        label: t('palette.open', { name: s.label }),
+        run: () => window.open(s.url, '_blank', 'noopener'),
+      })),
+    ];
+  });
 
   protected readonly filtered = computed(() => {
     const q = this.query().toLowerCase().trim();
-    if (!q) return this.commands;
-    return this.commands.filter((c) => `${c.group} ${c.label}`.toLowerCase().includes(q));
+    if (!q) return this.commands();
+    return this.commands().filter((c) => `${c.group} ${c.label}`.toLowerCase().includes(q));
   });
 
   constructor() {

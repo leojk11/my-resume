@@ -56,8 +56,8 @@ export const RESUME: Resume = {
   ],
 
   about: [
-    'I am a software developer who loves turning complex problems into simple, elegant products. Write a short paragraph here about who you are and what drives you.',
-    'Add a second paragraph about your focus areas, the kind of teams you thrive in, or what you are exploring right now.',
+    'I am a software developer from Skopje who loves turning complex problems into simple, elegant products. I started in 2019 building websites from scratch at CodeDesk, and over 5+ years and 20+ shipped projects that curiosity has grown into building large-scale Angular applications as a Senior Developer at Atis Software Factory.',
+    'Angular is my craft: I care about clean, modular code and interfaces that feel effortless to use. I work fully remote, enjoy reviewing code and sharing what I know with the team, and I am always learning: right now I am expanding into backend and cloud with Node.js, Azure and AWS, because I like building things people actually use.',
   ],
 
   stats: [
@@ -105,24 +105,28 @@ export const RESUME: Resume = {
   projects: [
     {
       title: 'Invoice Generator',
-      description: 'A tool to create, preview and export professional invoices in seconds.',
+      description:
+        'Built to help small businesses create invoices, even from a phone, so they can ship them easily. Pure JavaScript.',
       category: 'Web App',
-      tech: ['Angular', 'TypeScript', 'PDF'],
+      tech: ['JavaScript', 'HTML', 'CSS', 'Mobile-friendly'],
       repo: 'https://github.com/leojk11/invoice-generator',
-      featured: true,
+      link: 'https://invoice-generator.softwareio.click/',
     },
     {
       title: 'Wedding Invitation',
-      description: 'An interactive digital invitation with RSVP backed by a custom API.',
+      description:
+        'An interactive digital invitation for couples about to get married, to invite guests to their wedding party and collect RSVPs, backed by a custom API. Still a work in progress: many more features are coming, especially an admin panel to control the whole page dynamically.',
       category: 'Web App',
       tech: ['Angular', 'API', 'Animations'],
       link: 'https://example.com',
+      featured: true,
     },
     {
       title: 'Wedding Invitation API',
       description: 'The backend service handling guests, RSVPs and notifications.',
       category: 'Backend',
       tech: ['Node.js', 'REST', 'Database'],
+      featured: true,
     },
     {
       title: 'Project Four',

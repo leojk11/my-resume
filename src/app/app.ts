@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommandPalette } from './components/command-palette';
 import { Nav } from './components/nav';
 import { ParticleField } from './components/particle-field';
 import { Toast } from './components/toast';
-import { RESUME } from './data/resume.data';
+import { I18n } from './i18n/i18n.service';
 import { About } from './sections/about';
 import { Contact } from './sections/contact';
 import { ExperienceSection } from './sections/experience';
@@ -53,6 +53,7 @@ import { Terminal } from './sections/terminal';
 })
 export class App {
   constructor() {
-    document.title = `${RESUME.profile.name} — ${RESUME.profile.roles[0]}`;
+    // Instantiating the service applies the saved language to <html lang> and the page title.
+    inject(I18n);
   }
 }

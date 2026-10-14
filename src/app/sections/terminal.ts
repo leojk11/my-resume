@@ -1,15 +1,18 @@
 import { Component, ElementRef, inject, signal, viewChild } from '@angular/core';
-import { RESUME } from '../data/resume.data';
+import { I18n } from '../i18n/i18n.service';
+import { StringKey } from '../i18n/strings';
 import { SECTIONS } from '../components/nav';
 import { RevealDirective } from '../shared/reveal.directive';
 import { UiStateService } from '../shared/ui-state.service';
 
 interface Line {
+  /** When set, the text is a translatable UI string and re-renders on language change. */
+  key?: StringKey;
+  params?: Record<string, string>;
   kind: 'in' | 'out' | 'err' | 'accent';
   text: string;
 }
 
-const HANDLE = RESUME.profile.name.toLowerCase().split(' ')[0] || 'guest';
 
 /** A tiny shell visitors can play with to explore the résumé. */
 @Component({
@@ -19,7 +22,7 @@ const HANDLE = RESUME.profile.name.toLowerCase().split(' ')[0] || 'guest';
     <section id="terminal" class="section">
       <header class="section-head" appReveal>
         <span class="index">// 05</span>
-        <h2>Interactive <span class="gradient-text">shell</span></h2>
+        <h2>{{ i18n.t('terminal.h1') }} <span class="gradient-text">{{ i18n.t('terminal.h2') }}</span></h2>
         <div class="line"></div>
       </header>
 
@@ -34,7 +37,7 @@ const HANDLE = RESUME.profile.name.toLowerCase().split(' ')[0] || 'guest';
               @if (l.kind === 'in') {
                 <span class="ps">{{ handle }}&#64;portfolio:~$</span>
               }
-              {{ l.text }}
+              {{ l.key ? i18n.t(l.key, l.params) : l.text }}
             </div>
           }
           <div class="l in prompt-line">
@@ -43,7 +46,7 @@ const HANDLE = RESUME.profile.name.toLowerCase().split(' ')[0] || 'guest';
               #input
               spellcheck="false"
               autocomplete="off"
-              aria-label="Terminal input"
+              [attr.aria-label]="i18n.t('term.input')"
               [value]="draft()"
               (input)="draft.set(input.value)"
               (keydown)="onKey($event)"
@@ -51,7 +54,9 @@ const HANDLE = RESUME.profile.name.toLowerCase().split(' ')[0] || 'guest';
           </div>
         </div>
       </div>
-      <p class="tip" appReveal>Try <code>help</code>, <code>skills</code>, <code>contact</code> or <code>goto projects</code>.</p>
+      <p class="tip" appReveal>
+        {{ i18n.t('term.try') }} <code>help</code>, <code>skills</code>, <code>contact</code> {{ i18n.t('term.or') }} <code>goto projects</code>.
+      </p>
     </section>
   `,
   styles: `
@@ -134,10 +139,11 @@ const HANDLE = RESUME.profile.name.toLowerCase().split(' ')[0] || 'guest';
   `,
 })
 export class Terminal {
-  protected readonly handle = HANDLE;
+  protected readonly i18n = inject(I18n);
+  protected readonly handle = this.i18n.resume().profile.name.toLowerCase().split(' ')[0] || 'guest';
   protected readonly lines = signal<Line[]>([
-    { kind: 'accent', text: `Welcome to ${RESUME.profile.name}'s portfolio shell v1.0` },
-    { kind: 'out', text: "Type 'help' to see available commands." },
+    { kind: 'accent', key: 'term.welcome', params: { name: this.i18n.resume().profile.name }, text: '' },
+    { kind: 'out', key: 'term.hint', text: '' },
   ]);
   protected readonly draft = signal('');
 
@@ -147,50 +153,57 @@ export class Terminal {
   private history: string[] = [];
   private historyIndex = 0;
 
-  private readonly commands: Record<string, { desc: string; run: (args: string[]) => string[] | void }> = {
+  /** Command output is produced in the language active when the command runs. */
+  private readonly commands: Record<string, { desc: StringKey | null; run: (args: string[]) => string[] | void }> = {
     help: {
-      desc: 'List available commands',
-      run: () => Object.entries(this.commands).map(([k, v]) => `  ${k.padEnd(12)} ${v.desc}`),
+      desc: 'term.cmd.help',
+      run: () => Object.entries(this.commands).map(([k, v]) => `  ${k.padEnd(12)} ${v.desc ? this.i18n.t(v.desc) : '¯\\_(ツ)_/¯'}`),
     },
     whoami: {
-      desc: 'Who is this?',
-      run: () => [RESUME.profile.name, RESUME.profile.roles[0], RESUME.profile.location],
+      desc: 'term.cmd.whoami',
+      run: () => {
+        const { name, roles, location } = this.i18n.resume().profile;
+        return [name, roles[0], location];
+      },
     },
-    about: { desc: 'Short bio', run: () => RESUME.about },
+    about: { desc: 'term.cmd.about', run: () => this.i18n.resume().about },
     skills: {
-      desc: 'Skill overview',
+      desc: 'term.cmd.skills',
       run: () =>
-        RESUME.skillGroups.flatMap((g) => [
+        this.i18n.resume().skillGroups.flatMap((g) => [
           `[${g.category}]`,
           ...g.skills.map((s) => `  ${s.name.padEnd(16)} ${'█'.repeat(Math.round(s.level / 10)).padEnd(10, '░')} ${s.level}%`),
         ]),
     },
     experience: {
-      desc: 'Work history',
-      run: () => RESUME.experience.map((e) => `${e.period.padEnd(18)} ${e.role} @ ${e.company}`),
+      desc: 'term.cmd.experience',
+      run: () => this.i18n.resume().experience.map((e) => `${e.period.padEnd(18)} ${e.role} @ ${e.company}`),
     },
     projects: {
-      desc: 'List projects',
-      run: () => RESUME.projects.map((p) => `• ${p.title} — ${p.description}`),
+      desc: 'term.cmd.projects',
+      run: () => this.i18n.resume().projects.map((p) => `• ${p.title} — ${p.description}`),
     },
     contact: {
-      desc: 'How to reach me',
-      run: () => [`email: ${RESUME.profile.email}`, ...RESUME.socials.map((s) => `${s.label.toLowerCase()}: ${s.url}`)],
-    },
-    goto: {
-      desc: 'Scroll to a section (goto <name>)',
-      run: ([target]) => {
-        const s = SECTIONS.find((x) => x.id === target?.toLowerCase());
-        if (!s) return [`usage: goto <${SECTIONS.map((x) => x.id).join('|')}>`];
-        setTimeout(() => this.ui.scrollTo(s.id), 300);
-        return [`Navigating to ${s.label}…`];
+      desc: 'term.cmd.contact',
+      run: () => {
+        const { profile, socials } = this.i18n.resume();
+        return [`email: ${profile.email}`, ...socials.map((s) => `${s.label.toLowerCase()}: ${s.url}`)];
       },
     },
-    date: { desc: 'Current date & time', run: () => [new Date().toString()] },
-    echo: { desc: 'Print text', run: (args) => [args.join(' ')] },
-    sudo: { desc: '¯\\_(ツ)_/¯', run: () => ['Permission denied: nice try though 😉'] },
+    goto: {
+      desc: 'term.cmd.goto',
+      run: ([target]) => {
+        const s = SECTIONS.find((x) => x.id === target?.toLowerCase());
+        if (!s) return [this.i18n.t('term.usage', { list: SECTIONS.map((x) => x.id).join('|') })];
+        setTimeout(() => this.ui.scrollTo(s.id), 300);
+        return [this.i18n.t('term.navigating', { name: this.i18n.t(s.labelKey) })];
+      },
+    },
+    date: { desc: 'term.cmd.date', run: () => [new Date().toString()] },
+    echo: { desc: 'term.cmd.echo', run: (args) => [args.join(' ')] },
+    sudo: { desc: null, run: () => [this.i18n.t('term.sudo')] },
     clear: {
-      desc: 'Clear the screen',
+      desc: 'term.cmd.clear',
       run: () => {
         this.lines.set([]);
       },
@@ -228,7 +241,7 @@ export class Terminal {
       this.historyIndex = this.history.length;
       const [name, ...args] = raw.split(/\s+/);
       const cmd = this.commands[name.toLowerCase()];
-      const out = cmd ? cmd.run(args) : [`command not found: ${name}. Type 'help'.`];
+      const out = cmd ? cmd.run(args) : [this.i18n.t('term.notFound', { name })];
       if (out) {
         this.lines.update((l) => [...l, ...out.map((text) => ({ kind: cmd ? 'out' : 'err', text }) as Line)]);
       }

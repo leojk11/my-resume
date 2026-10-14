@@ -1,20 +1,23 @@
 import { Component, DestroyRef, afterNextRender, inject, signal } from '@angular/core';
 import { RESUME } from '../data/resume.data';
+import { I18n } from '../i18n/i18n.service';
+import { StringKey } from '../i18n/strings';
 import { Icon } from '../shared/icon';
 import { UiStateService } from '../shared/ui-state.service';
+import { LangSwitcher } from './lang-switcher';
 
-export const SECTIONS = [
-  { id: 'about', label: 'About' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'terminal', label: 'Terminal' },
-  { id: 'contact', label: 'Contact' },
+export const SECTIONS: { id: string; labelKey: StringKey }[] = [
+  { id: 'about', labelKey: 'nav.about' },
+  { id: 'skills', labelKey: 'nav.skills' },
+  { id: 'experience', labelKey: 'nav.experience' },
+  { id: 'projects', labelKey: 'nav.projects' },
+  { id: 'terminal', labelKey: 'nav.terminal' },
+  { id: 'contact', labelKey: 'nav.contact' },
 ];
 
 @Component({
   selector: 'app-nav',
-  imports: [Icon],
+  imports: [Icon, LangSwitcher],
   template: `
     <div class="progress" [style.transform]="'scaleX(' + progress() + ')'"></div>
     <nav class="glass" [class.scrolled]="scrolled()">
@@ -26,17 +29,18 @@ export const SECTIONS = [
         @for (s of sections; track s.id; let i = $index) {
           <li>
             <a [href]="'#' + s.id" [class.active]="active() === s.id" (click)="go($event, s.id)">
-              <span class="num">0{{ i + 1 }}.</span>{{ s.label }}
+              <span class="num">0{{ i + 1 }}.</span>{{ i18n.t(s.labelKey) }}
             </a>
           </li>
         }
       </ul>
 
       <div class="actions">
-        <button class="kbd" title="Command palette" (click)="ui.paletteOpen.set(true)">
+        <app-lang-switcher />
+        <button class="kbd" [title]="i18n.t('nav.palette')" (click)="ui.paletteOpen.set(true)">
           <app-icon name="command" [size]="14" /> K
         </button>
-        <button class="burger" [class.open]="menuOpen()" aria-label="Menu" (click)="menuOpen.set(!menuOpen())">
+        <button class="burger" [class.open]="menuOpen()" [attr.aria-label]="i18n.t('nav.menu')" (click)="menuOpen.set(!menuOpen())">
           <span></span><span></span>
         </button>
       </div>
@@ -176,7 +180,8 @@ export const SECTIONS = [
         transform: translateY(-4px) rotate(-45deg);
       }
     }
-    @media (max-width: 900px) {
+    /* Macedonian labels are wider, so collapse to the burger menu a little earlier. */
+    @media (max-width: 1040px) {
       .burger {
         display: block;
       }
@@ -209,6 +214,7 @@ export const SECTIONS = [
 })
 export class Nav {
   protected readonly ui = inject(UiStateService);
+  protected readonly i18n = inject(I18n);
   protected readonly sections = SECTIONS;
   protected readonly initials = RESUME.profile.name
     .split(' ')

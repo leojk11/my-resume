@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RESUME } from '../data/resume.data';
+import { Component, computed, inject } from '@angular/core';
+import { I18n } from '../i18n/i18n.service';
 import { CountUpDirective } from '../shared/count-up.directive';
 import { RevealDirective } from '../shared/reveal.directive';
 
@@ -10,19 +10,19 @@ import { RevealDirective } from '../shared/reveal.directive';
     <section id="about" class="section">
       <header class="section-head" appReveal>
         <span class="index">// 01</span>
-        <h2>About <span class="gradient-text">me</span></h2>
+        <h2>{{ i18n.t('about.h1') }} <span class="gradient-text">{{ i18n.t('about.h2') }}</span></h2>
         <div class="line"></div>
       </header>
 
       <div class="layout">
         <div class="bio">
-          @for (p of about; track $index) {
+          @for (p of about(); track $index) {
             <p appReveal [revealDelay]="$index * 120">{{ p }}</p>
           }
         </div>
 
         <div class="stats">
-          @for (s of stats; track s.label) {
+          @for (s of stats(); track $index) {
             <div class="stat glass" appReveal [revealDelay]="$index * 100">
               <div class="value gradient-text" [appCountUp]="s.value" [suffix]="s.suffix ?? ''"></div>
               <div class="label">{{ s.label }}</div>
@@ -75,6 +75,7 @@ import { RevealDirective } from '../shared/reveal.directive';
   `,
 })
 export class About {
-  protected readonly about = RESUME.about;
-  protected readonly stats = RESUME.stats;
+  protected readonly i18n = inject(I18n);
+  protected readonly about = computed(() => this.i18n.resume().about);
+  protected readonly stats = computed(() => this.i18n.resume().stats);
 }

@@ -1,5 +1,5 @@
-import { Component, DestroyRef, ElementRef, afterNextRender, inject, signal, viewChild } from '@angular/core';
-import { RESUME } from '../data/resume.data';
+import { Component, DestroyRef, ElementRef, afterNextRender, computed, inject, signal, viewChild } from '@angular/core';
+import { I18n } from '../i18n/i18n.service';
 import { RevealDirective } from '../shared/reveal.directive';
 
 @Component({
@@ -9,14 +9,14 @@ import { RevealDirective } from '../shared/reveal.directive';
     <section id="experience" class="section">
       <header class="section-head" appReveal>
         <span class="index">// 03</span>
-        <h2>Experience <span class="gradient-text">log</span></h2>
+        <h2>{{ i18n.t('experience.h1') }} <span class="gradient-text">{{ i18n.t('experience.h2') }}</span></h2>
         <div class="line"></div>
       </header>
 
       <div class="timeline" #timeline>
         <div class="rail"><div class="beam" [style.transform]="'scaleY(' + progress() + ')'"></div></div>
 
-        @for (job of jobs; track job.company + job.role; let odd = $odd) {
+        @for (job of jobs(); track $index; let odd = $odd) {
           <article class="entry" [class.right]="odd" appReveal>
             <div class="node"></div>
             <div class="card glass">
@@ -163,7 +163,8 @@ import { RevealDirective } from '../shared/reveal.directive';
   `,
 })
 export class ExperienceSection {
-  protected readonly jobs = RESUME.experience;
+  protected readonly i18n = inject(I18n);
+  protected readonly jobs = computed(() => this.i18n.resume().experience);
   protected readonly progress = signal(0);
   private readonly timeline = viewChild.required<ElementRef<HTMLElement>>('timeline');
 

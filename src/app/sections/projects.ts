@@ -1,5 +1,5 @@
-import { Component, computed, signal } from '@angular/core';
-import { RESUME } from '../data/resume.data';
+import { Component, computed, inject, signal } from '@angular/core';
+import { I18n } from '../i18n/i18n.service';
 import { Icon } from '../shared/icon';
 import { RevealDirective } from '../shared/reveal.directive';
 
@@ -10,15 +10,15 @@ import { RevealDirective } from '../shared/reveal.directive';
     <section id="projects" class="section">
       <header class="section-head" appReveal>
         <span class="index">// 04</span>
-        <h2>Selected <span class="gradient-text">projects</span></h2>
+        <h2>{{ i18n.t('projects.h1') }} <span class="gradient-text">{{ i18n.t('projects.h2') }}</span></h2>
         <div class="line"></div>
       </header>
 
       <div class="filters" appReveal>
-        @for (c of categories; track c) {
-          <button [class.active]="c === filter()" (click)="filter.set(c)">
+        @for (c of categories(); track $index) {
+          <button [class.active]="$index === filter()" (click)="filter.set($index)">
             {{ c }}
-            <span class="count">{{ countFor(c) }}</span>
+            <span class="count">{{ countFor($index) }}</span>
           </button>
         }
       </div>
@@ -29,7 +29,7 @@ import { RevealDirective } from '../shared/reveal.directive';
             <div class="top">
               <span class="cat">{{ p.category }}</span>
               @if (p.featured) {
-                <span class="star">★ featured</span>
+                <span class="star">{{ i18n.t('projects.featured') }}</span>
               }
             </div>
             <h3>{{ p.title }}</h3>
@@ -41,10 +41,10 @@ import { RevealDirective } from '../shared/reveal.directive';
             </div>
             <div class="links">
               @if (p.repo) {
-                <a [href]="p.repo" target="_blank" rel="noopener"><app-icon name="github" [size]="16" /> Code</a>
+                <a [href]="p.repo" target="_blank" rel="noopener"><app-icon name="github" [size]="16" /> {{ i18n.t('projects.code') }}</a>
               }
               @if (p.link) {
-                <a [href]="p.link" target="_blank" rel="noopener"><app-icon name="arrow" [size]="16" /> Live</a>
+                <a [href]="p.link" target="_blank" rel="noopener"><app-icon name="arrow" [size]="16" /> {{ i18n.t('projects.live') }}</a>
               }
             </div>
           </article>
@@ -176,15 +176,21 @@ import { RevealDirective } from '../shared/reveal.directive';
   `,
 })
 export class Projects {
-  private readonly projects = RESUME.projects;
-  protected readonly categories = ['All', ...new Set(this.projects.map((p) => p.category))];
-  protected readonly filter = signal('All');
+  protected readonly i18n = inject(I18n);
+  private readonly projects = computed(() => this.i18n.resume().projects);
+  protected readonly categories = computed(() => [
+    this.i18n.t('projects.all'),
+    ...new Set(this.projects().map((p) => p.category)),
+  ]);
+  /** Index into `categories` (0 = all). An index, not a name, so it survives a language switch. */
+  protected readonly filter = signal(0);
   protected readonly visible = computed(() => {
-    const f = this.filter();
-    return f === 'All' ? this.projects : this.projects.filter((p) => p.category === f);
+    const category = this.categories()[this.filter()];
+    return this.filter() === 0 || !category ? this.projects() : this.projects().filter((p) => p.category === category);
   });
 
-  countFor(category: string): number {
-    return category === 'All' ? this.projects.length : this.projects.filter((p) => p.category === category).length;
+  countFor(index: number): number {
+    const category = this.categories()[index];
+    return index === 0 ? this.projects().length : this.projects().filter((p) => p.category === category).length;
   }
 }

@@ -12,8 +12,8 @@
   --accent-2: #ff2bd6;
   --accent-2-rgb: 255, 43, 214;
 
-  --font-display: 'Orbitron', sans-serif;
-  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-display: 'Orbitron', 'Exo 2', sans-serif; /* Exo 2 supplies the Cyrillic glyphs Orbitron lacks */
+  --font-body: 'Space Grotesk', 'Manrope', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   --radius: 18px;

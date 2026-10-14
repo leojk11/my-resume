@@ -1,45 +1,45 @@
 <section id="top" class="hero">
   <div class="content">
     <div class="copy">
-      @if (profile.availableForWork) {
-        <div class="status"><span class="dot"></span> Available for new opportunities</div>
+      @if (profile().availableForWork) {
+        <div class="status"><span class="dot"></span> {{ i18n.t('hero.available') }}</div>
       }
 
-      <p class="hello">Hi, I'm</p>
-      <h1>{{ profile.name }}</h1>
+      <p class="hello">{{ i18n.t('hero.hi') }}</p>
+      <h1>{{ profile().name }}</h1>
 
       <p class="role">
         <span class="gradient-text">{{ typed() }}</span><span class="caret"></span>
       </p>
 
-      <p class="tagline">{{ profile.tagline }}</p>
+      <p class="tagline">{{ profile().tagline }}</p>
 
       <div class="cta">
-        <button class="btn" (click)="ui.scrollTo('projects')">View my work <app-icon name="arrow" [size]="16" /></button>
-        @if (profile.resumeUrl) {
-          <a class="btn ghost" [href]="profile.resumeUrl" target="_blank" download>
-            Résumé <app-icon name="download" [size]="16" />
+        <button class="btn" (click)="ui.scrollTo('projects')">{{ i18n.t('hero.work') }} <app-icon name="arrow" [size]="16" /></button>
+        @if (profile().resumeUrl) {
+          <a class="btn ghost" [href]="profile().resumeUrl" target="_blank" download>
+            {{ i18n.t('hero.resume') }} <app-icon name="download" [size]="16" />
           </a>
         } @else {
-          <button class="btn ghost" (click)="ui.scrollTo('contact')">Get in touch</button>
+          <button class="btn ghost" (click)="ui.scrollTo('contact')">{{ i18n.t('hero.touch') }}</button>
         }
       </div>
 
       <div class="socials">
-        @for (s of socials; track s.url) {
+        @for (s of socials(); track s.url) {
           <a [href]="s.url" target="_blank" rel="noopener" [attr.aria-label]="s.label" [title]="s.label">
             <app-icon [name]="s.icon" [size]="20" />
           </a>
         }
-        <span class="loc"><app-icon name="pin" [size]="16" /> {{ profile.location }}</span>
+        <span class="loc"><app-icon name="pin" [size]="16" /> {{ profile().location }}</span>
       </div>
     </div>
 
     <div class="avatar-wrap">
       <div class="ring"></div>
       <div class="avatar">
-        @if (profile.avatar) {
-          <img [src]="profile.avatar" [alt]="profile.name" />
+        @if (profile().avatar) {
+          <img [src]="profile().avatar" [alt]="profile().name" />
         } @else {
           <span class="initials">{{ initials }}</span>
         }

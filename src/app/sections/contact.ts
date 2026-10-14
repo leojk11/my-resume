@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { RESUME } from '../data/resume.data';
+import { Component, computed, inject } from '@angular/core';
+import { I18n } from '../i18n/i18n.service';
 import { Icon } from '../shared/icon';
 import { RevealDirective } from '../shared/reveal.directive';
 import { UiStateService } from '../shared/ui-state.service';
@@ -11,26 +11,26 @@ import { UiStateService } from '../shared/ui-state.service';
     <section id="contact" class="section">
       <header class="section-head" appReveal>
         <span class="index">// 06</span>
-        <h2>Let's <span class="gradient-text">connect</span></h2>
+        <h2>{{ i18n.t('contact.h1') }} <span class="gradient-text">{{ i18n.t('contact.h2') }}</span></h2>
         <div class="line"></div>
       </header>
 
       <div class="panel glass" appReveal>
         <p class="lead">
-          Have a project in mind, a role to fill, or just want to talk tech?<br />
-          My inbox is always open.
+          {{ i18n.t('contact.lead1') }}<br />
+          {{ i18n.t('contact.lead2') }}
         </p>
         <div class="email">
-          <a [href]="'mailto:' + profile.email" class="address gradient-text">{{ profile.email }}</a>
-          <button class="copy" title="Copy email" (click)="ui.copy(profile.email, 'Email copied')">
+          <a [href]="'mailto:' + profile().email" class="address gradient-text">{{ profile().email }}</a>
+          <button class="copy" [title]="i18n.t('contact.copy')" (click)="ui.copy(profile().email, i18n.t('contact.copied'))">
             <app-icon name="copy" [size]="18" />
           </button>
         </div>
-        <a class="btn" [href]="'mailto:' + profile.email">Say hello <app-icon name="arrow" [size]="16" /></a>
+        <a class="btn" [href]="'mailto:' + profile().email">{{ i18n.t('contact.hello') }} <app-icon name="arrow" [size]="16" /></a>
       </div>
 
       <div class="socials">
-        @for (s of socials; track s.url) {
+        @for (s of socials(); track s.url) {
           <a class="social glass" [href]="s.url" target="_blank" rel="noopener" appReveal [revealDelay]="$index * 80">
             <app-icon [name]="s.icon" [size]="22" />
             <span>{{ s.label }}</span>
@@ -41,7 +41,7 @@ import { UiStateService } from '../shared/ui-state.service';
     </section>
 
     <footer>
-      <span>© {{ year }} {{ profile.name }}</span>
+      <span>© {{ year }} {{ profile().name }}</span>
     </footer>
   `,
   styles: `
@@ -135,7 +135,8 @@ import { UiStateService } from '../shared/ui-state.service';
 })
 export class Contact {
   protected readonly ui = inject(UiStateService);
-  protected readonly profile = RESUME.profile;
-  protected readonly socials = RESUME.socials;
+  protected readonly i18n = inject(I18n);
+  protected readonly profile = computed(() => this.i18n.resume().profile);
+  protected readonly socials = computed(() => this.i18n.resume().socials);
   protected readonly year = new Date().getFullYear();
 }

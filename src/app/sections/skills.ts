@@ -1,5 +1,5 @@
-import { Component, computed, signal } from '@angular/core';
-import { RESUME } from '../data/resume.data';
+import { Component, computed, inject, signal } from '@angular/core';
+import { I18n } from '../i18n/i18n.service';
 import { RevealDirective } from '../shared/reveal.directive';
 
 @Component({
@@ -9,17 +9,17 @@ import { RevealDirective } from '../shared/reveal.directive';
     <section id="skills" class="section">
       <header class="section-head" appReveal>
         <span class="index">// 02</span>
-        <h2>Skill <span class="gradient-text">matrix</span></h2>
+        <h2 class="gradient-text">{{ i18n.t('skills.h2') }}</h2>
         <div class="line"></div>
       </header>
 
       <div class="tabs" appReveal role="tablist">
-        @for (g of groups; track g.category; let i = $index) {
+        @for (g of groups(); track $index; let i = $index) {
           <button role="tab" [class.active]="i === selected()" [attr.aria-selected]="i === selected()" (click)="selected.set(i)">
             {{ g.category }}
           </button>
         }
-        <span class="indicator" [style.--i]="selected()" [style.--n]="groups.length"></span>
+        <span class="indicator" [style.--i]="selected()" [style.--n]="groups().length"></span>
       </div>
 
       <div class="panel glass" appReveal>
@@ -138,7 +138,8 @@ import { RevealDirective } from '../shared/reveal.directive';
   `,
 })
 export class Skills {
-  protected readonly groups = RESUME.skillGroups;
+  protected readonly i18n = inject(I18n);
+  protected readonly groups = computed(() => this.i18n.resume().skillGroups);
   protected readonly selected = signal(0);
-  protected readonly current = computed(() => this.groups[this.selected()]);
+  protected readonly current = computed(() => this.groups()[this.selected()]);
 }
