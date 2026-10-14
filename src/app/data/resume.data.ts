@@ -1,11 +1,5 @@
 import { Resume, SkillGroup } from './resume.model';
 
-/**
- * ─────────────────────────────────────────────────────────────
- *  EDIT THIS FILE — everything on the site is driven from here.
- * ─────────────────────────────────────────────────────────────
- */
-
 const SKILL_GROUPS: SkillGroup[] = [
   {
     category: 'Frontend',
@@ -33,7 +27,6 @@ const SKILL_GROUPS: SkillGroup[] = [
   },
 ];
 
-/** Number of technologies listed above — used by the "Technologies" stat. */
 const TECH_COUNT = SKILL_GROUPS.reduce((sum, g) => sum + g.skills.length, 0);
 
 export const RESUME: Resume = {
@@ -117,23 +110,44 @@ export const RESUME: Resume = {
       description:
         'An interactive digital invitation for couples about to get married, to invite guests to their wedding party and collect RSVPs, backed by a custom API. Still a work in progress: many more features are coming, especially an admin panel to control the whole page dynamically.',
       category: 'Web App',
-      tech: ['Angular', 'API', 'Animations'],
-      link: 'https://example.com',
+      tech: ['Angular', 'TypeScript', 'Angular Material', 'Material UI', 'RxJS', 'SCSS', 'Frontend', 'Animations', 'API'],
+      repo: 'https://github.com/leojk11/wedding-inv-ng.git',
+      link: 'https://wedding-inv.softwareio.click/',
       featured: true,
     },
     {
       title: 'Wedding Invitation API',
-      description: 'The backend service handling guests, RSVPs and notifications.',
+      description:
+        'The backend behind the Wedding Invitation app: a REST API that manages the guest list, stores RSVPs and sends notifications, so couples always know who is coming. Built to also power the upcoming admin panel, where the whole invitation can be controlled dynamically. Still a work in progress: more endpoints and features are on the way.',
       category: 'Backend',
-      tech: ['Node.js', 'REST', 'Database'],
+      tech: ['Node.js', 'REST', 'MongoDB', 'Database'],
+      repo: 'https://github.com/leojk11/wedding-inv-api',
+      // featured: true,
+    },
+    {
+      title: 'PhotoDej WEB Page',
+      description:
+        'A web app for a photography studio: a public website with a gallery and contact form, a client area where customers browse their albums and pick favourite photos, and a back office where the studio manages clients, albums, bookings and the site content itself, in Macedonian and English. Still a work in progress: it is an older application that was recently upgraded to the latest Angular, and it will keep being updated further.',
+      category: 'Web App',
+      tech: ['Angular', 'TypeScript', 'PrimeNG', 'RxJS', 'NgRx', 'FullCalendar', 'i18n', 'Frontend', 'CMS'],
+      repo: 'https://github.com/leojk11/foto-dej-cms-ng14',
+      link: 'https://photodej.softwareio.click/home',
       featured: true,
     },
     {
-      title: 'Project Four',
-      description: 'Describe another project — what problem it solves and how.',
-      category: 'Open Source',
-      tech: ['TypeScript', 'CLI'],
+      title: 'PhotoDej API',
+      description:
+        'The REST backend behind the PhotoDej web page. It handles admin and client authentication, clients, albums and image uploads to cloud storage, the studio calendar, contact requests, e-mail invitations, notifications and visit statistics, plus the content of the public site.',
+      category: 'Backend',
+      tech: ['Node.js', 'Express', 'MongoDB', 'REST', 'JWT', 'Cloudflare R2'],
+      repo: 'https://github.com/leojk11/fotoDej-cms-api',
     },
+    // {
+    //   title: 'Project Four',
+    //   description: 'Describe another project — what problem it solves and how.',
+    //   category: 'Open Source',
+    //   tech: ['TypeScript', 'CLI'],
+    // },
   ],
 
 };

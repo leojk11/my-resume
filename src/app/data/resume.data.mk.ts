@@ -1,15 +1,6 @@
 import { RESUME } from './resume.data';
 import { Experience, Project, Resume } from './resume.model';
 
-/**
- * Macedonian translation of resume.data.ts.
- *
- * Only translatable text lives here — links, emails, tech names and skill
- * levels are inherited from the English data. Lists are matched by their
- * English key (project title, company, skill category), so anything you add to
- * resume.data.ts without a translation here simply shows up in English.
- */
-
 const SKILL_CATEGORIES: Record<string, string> = {
   Frontend: 'Фронтенд',
   Backend: 'Бекенд',
@@ -56,12 +47,25 @@ const PROJECTS: Record<string, Partial<Project>> = {
     description:
       'Интерактивна дигитална покана за двојки што се готват да стапат во брак, за да ги поканат гостите на својата свадбена прослава и да собираат потврди на присуство, поддржана од сопствено API. Сè уште е во изработка: доаѓаат уште многу нови функционалности, особено админ панел со кој ќе се контролира целата страница динамично.',
     category: 'Веб апликација',
-    tech: ['Angular', 'API', 'Анимации'],
+    tech: ['Angular', 'TypeScript', 'Angular Material', 'Material UI', 'RxJS', 'SCSS', 'Frontend', 'Анимации', 'API'],
   },
   'Wedding Invitation API': {
-    description: 'Бекенд сервис за гости, потврди на присуство и известувања.',
+    description:
+      'Бекендот зад апликацијата Wedding Invitation: REST API што ја управува листата на гости, ги чува потврдите на присуство и испраќа известувања, за двојките секогаш да знаат кој доаѓа. Изграден е да го поддржува и идниот админ панел, преку кој целата покана ќе може динамично да се контролира. Сè уште е во изработка: доаѓаат уште многу нови endpoint-и и функционалности.',
     category: 'Бекенд',
-    tech: ['Node.js', 'REST', 'База на податоци'],
+    tech: ['Node.js', 'REST', 'MongoDB', 'База на податоци'],
+  },
+  'PhotoDej WEB Page': {
+    description:
+      'Веб апликација за фото студио: јавна веб-страница со галерија и контакт форма, клиентски дел каде корисниците ги разгледуваат своите албуми и ги избираат омилените фотографии, и бек офис каде студиото управува со клиенти, албуми, термини и со самата содржина на страницата, на македонски и на англиски. Сè уште е во изработка: тоа е постара апликација што неодамна е надградена на најновиот Angular и ќе продолжи да се надградува.',
+    category: 'Веб апликација',
+    tech: ['Angular', 'TypeScript', 'PrimeNG', 'RxJS', 'NgRx', 'FullCalendar', 'i18n', 'Frontend', 'CMS'],
+  },
+  'PhotoDej API': {
+    description:
+      'REST бекендот зад PhotoDej веб-страницата. Се грижи за автентикација на администратори и клиенти, клиенти, албуми и прикачување слики во облак, календарот на студиото, контакт барања, покани по е-пошта, известувања и статистика на посети, како и содржината на јавната страница.',
+    category: 'Бекенд',
+    tech: ['Node.js', 'Express', 'MongoDB', 'REST', 'JWT', 'Cloudflare R2'],
   },
   'Project Four': {
     description: 'Опиши уште еден проект — кој проблем го решава и како.',
