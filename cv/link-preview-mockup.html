@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Source for cv/link-preview-mockup.png: how the og:* tags render when the site link is shared. Rendered at 1800x780 with headless Edge. -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1800px; height: 780px; overflow: hidden; }
+  body {
+    box-sizing: border-box;
+    padding: 56px 64px;
+    background: #eef0f4;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    color: #1d2129;
+  }
+  h1 { margin: 0 0 6px; font-size: 30px; font-weight: 700; letter-spacing: -0.4px; }
+  .sub { margin: 0 0 40px; font-size: 17px; color: #5d6470; }
+  .row { display: flex; gap: 40px; align-items: flex-start; }
+  .col { flex: 1; }
+  .label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: #6b7280; margin: 0 0 14px 4px; }
+  .og { display: block; width: 100%; aspect-ratio: 1200 / 630; object-fit: cover; }
+
+  /* WhatsApp (dark) */
+  .wa { background: #0b141a; border-radius: 22px; padding: 26px 22px 30px; box-shadow: 0 12px 40px rgba(0,0,0,.18); }
+  .wa-head { display: flex; align-items: center; gap: 12px; padding-bottom: 18px; margin-bottom: 22px; border-bottom: 1px solid #222d34; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: #6b7c85; color: #fff; display: grid; place-items: center; font-weight: 600; font-size: 16px; }
+  .wa-name { color: #e9edef; font-weight: 600; font-size: 16px; }
+  .wa-status { color: #8696a0; font-size: 13px; }
+  .wa-bubble { margin-left: auto; width: 88%; background: #005c4b; border-radius: 10px 0 10px 10px; padding: 4px; color: #e9edef; }
+  .wa-card { background: #025144; border-radius: 7px; overflow: hidden; }
+  .wa-card .txt { padding: 10px 12px 12px; }
+  .wa-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+  .wa-desc { font-size: 13.5px; color: #b9cdc8; line-height: 1.35; margin-bottom: 4px; }
+  .wa-domain { font-size: 13px; color: #8fb3ab; }
+  .wa-link { padding: 8px 8px 2px; font-size: 15px; color: #53bdeb; }
+  .wa-time { text-align: right; font-size: 11.5px; color: #a3c4bd; padding: 0 8px 4px; }
+
+  /* LinkedIn */
+  .li { background: #fff; border-radius: 12px; box-shadow: 0 12px 40px rgba(0,0,0,.10); overflow: hidden; }
+  .li-head { display: flex; gap: 12px; padding: 18px 18px 10px; }
+  .li-head .avatar { width: 48px; height: 48px; background: #0a66c2; }
+  .li-name { font-weight: 600; font-size: 15px; }
+  .li-meta { font-size: 13px; color: #666; }
+  .li-text { padding: 2px 18px 14px; font-size: 15px; line-height: 1.45; }
+  .li-card .txt { background: #edf3f8; padding: 12px 18px 14px; }
+  .li-title { font-weight: 600; font-size: 15.5px; margin-bottom: 4px; }
+  .li-domain { font-size: 13px; color: #666; }
+  .li-actions { display: flex; justify-content: space-around; padding: 12px 10px 14px; font-size: 14px; font-weight: 600; color: #666; border-top: 1px solid #e8e8e8; }
+
+  /* Slack */
+  .sl { background: #fff; border-radius: 12px; box-shadow: 0 12px 40px rgba(0,0,0,.10); padding: 20px 22px 24px; }
+  .sl-msg { display: flex; gap: 12px; }
+  .sl-msg .avatar { width: 40px; height: 40px; border-radius: 8px; background: #4a154b; flex-shrink: 0; }
+  .sl-name { font-weight: 700; font-size: 15px; }
+  .sl-name span { font-weight: 400; color: #616061; font-size: 12.5px; margin-left: 6px; }
+  .sl-text { font-size: 15px; margin: 4px 0 10px; }
+  .sl-text a { color: #1264a3; text-decoration: none; }
+  .sl-unfurl { border-left: 4px solid #dddddd; padding-left: 12px; }
+  .sl-site { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+  .sl-fav { width: 16px; height: 16px; border-radius: 3px; background: linear-gradient(135deg,#00f0ff,#ff2bd6); }
+  .sl-title { color: #1264a3; font-weight: 700; font-size: 15px; margin-bottom: 2px; }
+  .sl-desc { font-size: 14.5px; color: #1d1c1d; line-height: 1.4; margin-bottom: 10px; }
+  .sl-unfurl .og { border-radius: 8px; max-width: 420px; }
+</style>
+</head>
+<body>
+  <h1>Link preview — how your site looks when shared</h1>
+  <p class="sub">Generated from the og:* / twitter:* tags in src/index.html and public/og-image.png (1200×630).</p>
+
+  <div class="row">
+    <div class="col">
+      <p class="label">WhatsApp</p>
+      <div class="wa">
+        <div class="wa-head">
+          <div class="avatar">A</div>
+          <div><div class="wa-name">Ana</div><div class="wa-status">online</div></div>
+        </div>
+        <div class="wa-bubble">
+          <div class="wa-card">
+            <img class="og" src="../public/og-image.png" alt="">
+            <div class="txt">
+              <div class="wa-title">Leonid Jakimovski — Software Developer</div>
+              <div class="wa-desc">Senior Software Developer specialising in Angular, based in Skopje, North Macedonia.</div>
+              <div class="wa-domain">my-resume.netlify.app</div>
+            </div>
+          </div>
+          <div class="wa-link">https://my-resume.netlify.app</div>
+          <div class="wa-time">10:42 ✓✓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <p class="label">LinkedIn</p>
+      <div class="li">
+        <div class="li-head">
+          <div class="avatar">LJ</div>
+          <div><div class="li-name">Leonid Jakimovski</div><div class="li-meta">Senior Software Developer · 1h</div></div>
+        </div>
+        <div class="li-text">My new portfolio site is live — experience, projects and contact in one place.</div>
+        <div class="li-card">
+          <img class="og" src="../public/og-image.png" alt="">
+          <div class="txt">
+            <div class="li-title">Leonid Jakimovski — Software Developer</div>
+            <div class="li-domain">my-resume.netlify.app</div>
+          </div>
+        </div>
+        <div class="li-actions"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+      </div>
+    </div>
+
+    <div class="col">
+      <p class="label">Slack</p>
+      <div class="sl">
+        <div class="sl-msg">
+          <div class="avatar"></div>
+          <div style="flex:1">
+            <div class="sl-name">Marko<span>10:42 AM</span></div>
+            <div class="sl-text">Check out this candidate: <a>https://my-resume.netlify.app</a></div>
+            <div class="sl-unfurl">
+              <div class="sl-site"><div class="sl-fav"></div>Leonid Jakimovski</div>
+              <div class="sl-title">Leonid Jakimovski — Software Developer</div>
+              <div class="sl-desc">Senior Software Developer specialising in Angular, based in Skopje, North Macedonia.</div>
+              <img class="og" src="../public/og-image.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

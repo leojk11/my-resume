@@ -4,10 +4,11 @@ const SKILL_GROUPS: SkillGroup[] = [
   {
     category: 'Frontend',
     skills: [
-      { name: 'Angular', level: 92 },
+      { name: 'Angular', level: 95 },
       { name: 'TypeScript', level: 90 },
       { name: 'RxJS / Signals', level: 85 },
       { name: 'HTML & SCSS', level: 88 },
+      { name: 'React', level: 77 },
     ],
   },
   {
@@ -16,6 +17,7 @@ const SKILL_GROUPS: SkillGroup[] = [
       { name: 'Node.js', level: 82 },
       { name: 'REST & GraphQL', level: 80 },
       { name: 'SQL', level: 78 },
+      { name: 'MongoDB & Mongoose', level: 78 },
     ],
   },
   {
