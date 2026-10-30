@@ -4,141 +4,181 @@
 <meta charset="utf-8">
 <title>Leonid Jakimovski — CV</title>
 <style>
-  @page { size: A4; margin: 12mm 16mm; }
-  * { box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  :root { --accent: #0b7285; --accent-dark: #095c6b; --tint: #e6f4f6; --ink: #1f2328; --muted: #57606a; --line: #d8dee4; }
+  html, body { margin: 0; padding: 0; }
   body {
-    margin: 0;
-    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
-    font-size: 10pt;
-    line-height: 1.35;
-    color: #1f2328;
+    font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.42;
+    color: var(--ink);
   }
   a { color: inherit; text-decoration: none; }
 
-  header { border-bottom: 2px solid #0b7285; padding-bottom: 10px; margin-bottom: 14px; }
-  h1 { margin: 0; font-size: 24pt; letter-spacing: 0.5px; color: #111; }
-  .title { margin: 2px 0 8px; font-size: 12pt; color: #0b7285; font-weight: 600; }
-  .contact { font-size: 9.5pt; color: #444; }
-  .contact span + span::before { content: '  |  '; color: #aaa; }
+  .page { width: 210mm; height: 296.5mm; overflow: hidden; position: relative; }
 
-  h2 {
-    margin: 12px 0 6px;
-    font-size: 11pt;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: #0b7285;
-    border-bottom: 1px solid #d0d7de;
-    padding-bottom: 3px;
+  /* ---------- header band ---------- */
+  header {
+    background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+    color: #fff;
+    padding: 9mm 16mm 8mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10mm;
   }
-  p { margin: 0 0 6px; }
+  h1 { margin: 0; font-size: 25pt; line-height: 1.1; font-weight: 700; letter-spacing: 0.3px; }
+  .title { margin: 3px 0 9px; font-size: 12pt; font-weight: 400; color: #c5ecf2; letter-spacing: 0.3px; }
+  .contact { display: grid; grid-template-columns: auto auto; justify-content: start; gap: 3px 22px; font-size: 8.5pt; color: #eaf8fa; }
+  .contact span { white-space: nowrap; }
+  .photo {
+    width: 28mm; height: 28mm; border-radius: 50%; object-fit: cover; object-position: center 20%;
+    border: 1.2mm solid #fff; flex-shrink: 0;
+  }
 
-  .job { margin-bottom: 8px; }
-  .job-head { display: flex; justify-content: space-between; align-items: baseline; }
+  /* ---------- body ---------- */
+  main { padding: 6mm 16mm 0; }
+  section { margin-bottom: 4.5mm; }
+  h2 {
+    display: flex; align-items: center; gap: 10px;
+    margin: 0 0 2.5mm;
+    font-size: 10.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px;
+    color: var(--accent);
+  }
+  h2::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  p { margin: 0; }
+
+  .job { margin-bottom: 3.5mm; }
+  .job:last-child { margin-bottom: 0; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
   .role { font-weight: 700; font-size: 11pt; }
-  .period { font-size: 9.5pt; color: #555; white-space: nowrap; }
-  .company { color: #444; margin-bottom: 4px; }
-  ul { margin: 4px 0 0; padding-left: 18px; }
-  li { margin-bottom: 2px; }
-  .tech { margin-top: 4px; font-size: 9.5pt; color: #555; }
+  .period { font-size: 9pt; color: var(--accent); font-weight: 600; white-space: nowrap; }
+  .company { color: var(--muted); margin-bottom: 5px; font-size: 9.5pt; }
+  .company a { color: var(--accent); }
+  ul { margin: 0; padding-left: 16px; }
+  li { margin-bottom: 1.5px; padding-left: 2px; }
+  li::marker { color: var(--accent); }
 
-  .skills { display: grid; grid-template-columns: 120px 1fr; row-gap: 3px; }
-  .skills dt { font-weight: 700; }
+  .chips { display: flex; flex-wrap: wrap; gap: 4px 5px; margin-top: 5px; }
+  .chip {
+    background: var(--tint); color: var(--accent-dark);
+    border-radius: 3mm; padding: 0.5px 8px; font-size: 8.5pt; font-weight: 600; line-height: 1.55;
+  }
+
+  .skills { display: grid; grid-template-columns: 30mm 1fr; row-gap: 5px; align-items: start; }
+  .skills dt { font-weight: 700; padding-top: 1px; }
   .skills dd { margin: 0; }
+  .skills dd .chips { margin-top: 0; }
 </style>
 </head>
 <body>
+<div class="page">
   <header>
-    <h1>Leonid Jakimovski</h1>
-    <div class="title">Senior Software Developer — Angular</div>
-    <div class="contact">
-      <span>Skopje, North Macedonia</span>
-      <span><a href="mailto:jakimovskil211@gmail.com">jakimovskil211@gmail.com</a></span>
-      <span><a href="https://www.linkedin.com/in/leonidjakimovski/">linkedin.com/in/leonidjakimovski</a></span>
-      <span><a href="https://github.com/leojk11">github.com/leojk11</a></span>
+    <div>
+      <h1>Leonid Jakimovski</h1>
+      <div class="title">Senior Software Developer — Angular</div>
+      <div class="contact">
+        <span>Skopje, North Macedonia</span>
+        <span><a href="mailto:jakimovskil211@gmail.com">jakimovskil211@gmail.com</a></span>
+        <span><a href="https://www.linkedin.com/in/leonidjakimovski/">linkedin.com/in/leonidjakimovski</a></span>
+        <span><a href="https://github.com/leojk11">github.com/leojk11</a></span>
+      </div>
     </div>
+    <img class="photo" src="../public/me.webp" alt="Leonid Jakimovski">
   </header>
 
-  <section>
-    <h2>Profile</h2>
-    <p>
-      Software developer with 7+ years of experience building for the web, specialising in Angular.
-      Currently a Senior Software Developer at Atis Software Factory, where I build complex, large-scale
-      Angular applications and turn demanding business requirements into fast, maintainable and
-      user-friendly products. My background in designing and building websites from scratch gives me a
-      strong eye for UI, layout and the user experience.
-    </p>
-  </section>
+  <main>
+    <section>
+      <h2>Profile</h2>
+      <p>
+        Software developer with 7+ years of experience building for the web, specialising in Angular.
+        Currently a Senior Software Developer at Atis Software Factory, where I build complex, large-scale
+        Angular applications and turn demanding business requirements into fast, maintainable and
+        user-friendly products. My background in designing and building websites from scratch gives me a
+        strong eye for UI, layout and the user experience.
+      </p>
+    </section>
 
-  <section>
-    <h2>Experience</h2>
+    <section>
+      <h2>Experience</h2>
 
-    <div class="job">
-      <div class="job-head">
-        <span class="role">Senior Software Developer</span>
-        <span class="period">2021 – Present</span>
+      <div class="job">
+        <div class="job-head">
+          <span class="role">Senior Software Developer</span>
+          <span class="period">2021 – Present</span>
+        </div>
+        <div class="company">Atis Software Factory · Remote</div>
+        <ul>
+          <li>Architect and develop feature-rich Angular applications with clean, modular and scalable code.</li>
+          <li>Break down complex problems and design practical solutions, from data flow and state management to performance.</li>
+          <li>Connect Angular applications to existing REST APIs: consuming endpoints, mapping data and handling loading and error states.</li>
+          <li>Review code, share knowledge and help keep quality and best practices high across the team.</li>
+          <li>Work closely with clients and teammates in a fully remote setup, from requirements to delivery.</li>
+        </ul>
+        <div class="chips">
+          <span class="chip">Angular</span><span class="chip">TypeScript</span><span class="chip">RxJS</span><span class="chip">API integration</span><span class="chip">SCSS</span>
+        </div>
       </div>
-      <div class="company">Atis Software Factory · Remote</div>
-      <ul>
-        <li>Architect and develop feature-rich Angular applications with clean, modular and scalable code.</li>
-        <li>Break down complex problems and design practical solutions, from data flow and state management to performance.</li>
-        <li>Connect Angular applications to existing REST APIs: consuming endpoints, mapping data and handling loading and error states.</li>
-        <li>Review code, share knowledge and help keep quality and best practices high across the team.</li>
-        <li>Work closely with clients and teammates in a fully remote setup, from requirements to delivery.</li>
-      </ul>
-      <div class="tech"><strong>Tech:</strong> Angular, TypeScript, RxJS, API integration, SCSS</div>
-    </div>
 
-    <div class="job">
-      <div class="job-head">
-        <span class="role">Junior Developer</span>
-        <span class="period">2019 – 2021</span>
+      <div class="job">
+        <div class="job-head">
+          <span class="role">Junior Developer</span>
+          <span class="period">2019 – 2021</span>
+        </div>
+        <div class="company">CodeDesk</div>
+        <ul>
+          <li>Built websites end to end: from layout and visual design to responsive, cross-browser implementation.</li>
+          <li>Learned the fundamentals of UI/UX: typography, colour, spacing and designing with the user in mind.</li>
+          <li>Turned design mockups into clean, pixel-perfect HTML, CSS and JavaScript.</li>
+          <li>Built a strong foundation in web development that later grew into building full applications.</li>
+        </ul>
+        <div class="chips">
+          <span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Responsive design</span><span class="chip">UI/UX</span>
+        </div>
       </div>
-      <div class="company">CodeDesk</div>
-      <ul>
-        <li>Built websites end to end: from layout and visual design to responsive, cross-browser implementation.</li>
-        <li>Learned the fundamentals of UI/UX: typography, colour, spacing and designing with the user in mind.</li>
-        <li>Turned design mockups into clean, pixel-perfect HTML, CSS and JavaScript.</li>
-        <li>Built a strong foundation in web development that later grew into building full applications.</li>
-      </ul>
-      <div class="tech"><strong>Tech:</strong> HTML, CSS, JavaScript, Responsive design, UI/UX</div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <h2>Projects</h2>
+    <section>
+      <h2>Projects</h2>
 
-    <div class="job">
-      <div class="job-head">
-        <span class="role">Wedding Invitation</span>
-        <span class="period">Angular · API · Animations</span>
+      <div class="job">
+        <div class="job-head">
+          <span class="role">Wedding Invitation</span>
+          <span class="period">Angular · API · Animations</span>
+        </div>
+        <div class="company">
+          <a href="https://wedding-inv.softwareio.click/">wedding-inv.softwareio.click</a>  ·
+          <a href="https://github.com/leojk11/wedding-inv-ng">github.com/leojk11/wedding-inv-ng</a>
+        </div>
+        <p>An interactive digital wedding invitation that lets couples invite guests and collect RSVPs, backed by a custom API (Node.js, REST). Work in progress, with an admin panel for controlling the whole page dynamically coming next.</p>
       </div>
-      <div class="company">
-        <a href="https://wedding-inv.softwareio.click/">wedding-inv.softwareio.click</a> ·
-        <a href="https://github.com/leojk11/wedding-inv-ng">github.com/leojk11/wedding-inv-ng</a>
-      </div>
-      <p>An interactive digital wedding invitation that lets couples invite guests and collect RSVPs, backed by a custom API (Node.js, REST). Work in progress, with an admin panel for controlling the whole page dynamically coming next.</p>
-    </div>
 
-    <div class="job">
-      <div class="job-head">
-        <span class="role">Invoice Generator</span>
-        <span class="period">JavaScript · HTML · CSS</span>
+      <div class="job">
+        <div class="job-head">
+          <span class="role">Invoice Generator</span>
+          <span class="period">JavaScript · HTML · CSS</span>
+        </div>
+        <div class="company">
+          <a href="https://invoice-generator.softwareio.click/">invoice-generator.softwareio.click</a>  ·
+          <a href="https://github.com/leojk11/invoice-generator">github.com/leojk11/invoice-generator</a>
+        </div>
+        <p>A mobile-friendly web app that helps small businesses create and send invoices, even from a phone. Built in pure JavaScript.</p>
       </div>
-      <div class="company">
-        <a href="https://invoice-generator.softwareio.click/">invoice-generator.softwareio.click</a> ·
-        <a href="https://github.com/leojk11/invoice-generator">github.com/leojk11/invoice-generator</a>
-      </div>
-      <p>A mobile-friendly web app that helps small businesses create and send invoices, even from a phone. Built in pure JavaScript.</p>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <h2>Skills</h2>
-    <dl class="skills">
-      <dt>Frontend</dt><dd>Angular, TypeScript, RxJS / Signals, HTML, SCSS</dd>
-      <dt>Backend</dt><dd>Node.js, REST &amp; GraphQL, SQL</dd>
-      <dt>Tools &amp; Cloud</dt><dd>Git, Azure / AWS</dd>
-    </dl>
-  </section>
+    <section>
+      <h2>Skills</h2>
+      <dl class="skills">
+        <dt>Frontend</dt>
+        <dd><div class="chips"><span class="chip">Angular</span><span class="chip">TypeScript</span><span class="chip">RxJS / Signals</span><span class="chip">HTML</span><span class="chip">SCSS</span></div></dd>
+        <dt>Backend</dt>
+        <dd><div class="chips"><span class="chip">Node.js</span><span class="chip">REST &amp; GraphQL</span><span class="chip">SQL</span></div></dd>
+        <dt>Tools &amp; Cloud</dt>
+        <dd><div class="chips"><span class="chip">Git</span><span class="chip">Azure / AWS</span></div></dd>
+      </dl>
+    </section>
+  </main>
+</div>
 </body>
 </html>
